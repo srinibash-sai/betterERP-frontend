@@ -8,6 +8,7 @@
     <style>
         body {
             margin: 20px;
+            background-color: rgb(207, 227, 58);
         }
 
         * {
@@ -20,13 +21,26 @@
         .accordion {
             margin: 60px auto;
             width: 500px;
+            
+            animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
         }
 
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
         .accordion li {
             list-style: none;
             width: 100%;
-            margin: 20px;
             padding: 10px;
+            margin-top: 20px;
             border-radius: 8px;
             background: #e3edf7;
             box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
@@ -101,6 +115,7 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
+
         button {
             background-color: #4c74af;
             color: #fff;
@@ -108,19 +123,32 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            
+
         }
 
         button:hover {
             background-color: #43c4f8;
-            
+
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 600px) {            
             .searchBox {
                 margin: 60px auto;
                 width: 300px;
             }
+
+            .accordion {
+                margin: 10px auto;
+                width: 300px;
+                padding: 10px;
+                /* background-color: #abcdf0;
+                border-radius: 8px;*/
+            }
+
+            .accordion li label {
+                font-size: 14px;
+            }
+
         }
     </style>
 </head>
@@ -152,8 +180,8 @@
         </div>
     </div>
 
-    <ul class="accordion" id="studentList">
-
+    <ul class="accordion" id="studentList" style="display: none;">
+        
     </ul>
 
     <script>
@@ -178,6 +206,8 @@
                 .then(data => {
                     function generateStudentList(data) {
                         const studentList = document.getElementById('studentList');
+                        studentList.innerHTML = "";
+                        studentList.style.display = "block";
 
                         data.forEach(student => {
                             const li = document.createElement('li');
